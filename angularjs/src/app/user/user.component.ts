@@ -16,9 +16,6 @@ export class UserComponent implements OnInit {
   clickedRows = new Set<User>();
   dataSource : MatTableDataSource<User>;
   user? : User;
-  firstClicked = false;
-  previousId : string | null;
-  selectedUser : User;
 
   constructor(
     private api: ApiService,
@@ -30,7 +27,7 @@ export class UserComponent implements OnInit {
     });
 
     // Refresh table after adding user
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getUsers();
     });
   }
@@ -61,50 +58,9 @@ export class UserComponent implements OnInit {
     });
   }
 
-  onRowClicked(row: User) {
-    const index = this.dataSource.data.indexOf(row);
-    console.log("Selected = ", this.selectedUser);
-
-    if (!this.previousId) {
-      this.previousId = row._id;
-      console.log( 'ID = ', this.previousId);
-      this.selectedUser = row;
-      console.log("First = ", this.selectedUser);
-      this.firstClicked = true;
-    } else {
-      if (this.previousId != row._id) {
-          this.selectedUser = row;
-          console.log("First2 = ", this.selectedUser);
-          this.previousId = row._id;
-          console.log( 'ID2 = ', this.previousId);
-          this.firstClicked = true;
-      } else {
-        this.firstClicked = false;
-      }
-    }
-
-    console.log("Clicked = ", this.firstClicked);
-  }
-
   select(user: User) {
     this.user = user;
     this.user['isEdit'] = true;
-
-    if (!this.previousId) {
-      this.previousId = user._id;
-      this.selectedUser = user;
-      console.log("First = ", this.selectedUser);
-      this.firstClicked = true;
-    } else {
-      if (this.previousId != user._id) {
-          this.selectedUser = user;
-          console.log("First2 = ", this.selectedUser);
-          this.previousId = user._id;
-          this.firstClicked = true;
-      } else {
-        this.firstClicked = false;
-      }
-    }
   }
 
   delete(id: string) {
@@ -134,7 +90,7 @@ export class UserComponent implements OnInit {
   }
 
   cancel() {
-    // Cancel information update and revert information to previous state
+    // Cancel update and revert information to previous state
     this.getUsers();
   }
 }

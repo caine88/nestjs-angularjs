@@ -6,13 +6,13 @@
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)">
 </mat-form-field>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" style="width: 100%;" matSort>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
   <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+    <th mat-header-cell *matHeaderCellDef> No. </th>
     <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
   </ng-container>
   <ng-container matColumnDef="username">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+    <th mat-header-cell *matHeaderCellDef> Username </th>
     <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="!element.isEdit">
         {{element.username}}
@@ -23,9 +23,8 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+    <th mat-header-cell *matHeaderCellDef> Email </th>
     <td mat-cell *matCellDef="let element">
-    <!-- <td mat-cell *matCellDef="let element"> {{element.email}} </td> -->
       <ng-container *ngIf="!element.isEdit">
         {{element.email}}
       </ng-container>
@@ -35,8 +34,7 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-    <!-- <td mat-cell *matCellDef="let element"> {{element.phone}} </td> -->
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
     <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="!element.isEdit">
         {{element.phone}}
@@ -47,8 +45,7 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="skillsets">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Skillsets </th>
-    <!-- <td mat-cell *matCellDef="let element"> {{element.skillsets}} </td> -->
+    <th mat-header-cell *matHeaderCellDef> Skillsets </th>
     <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="!element.isEdit">
         {{element.skillsets}}
@@ -59,8 +56,7 @@
     </td>
   </ng-container>
   <ng-container matColumnDef="hobby">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Hobby </th>
-    <!-- <td mat-cell *matCellDef="let element"> {{element.hobby}} </td> -->
+    <th mat-header-cell *matHeaderCellDef> Hobby </th>
     <td mat-cell *matCellDef="let element">
       <ng-container *ngIf="!element.isEdit">
         {{element.hobby}}
@@ -93,78 +89,5 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <!-- <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" (click)="onRowClicked(row)"></tr> -->
   <tr mat-row (click)="clickedRows.add(row)" *matRowDef="let row; columns: columnsToDisplay;"></tr>
 </table>
-
-<div *ngIf="clickedRows.size">
-  <div *ngFor="let clickedRow of clickedRows">
-    <h2>{{clickedRow.username | uppercase}}</h2>
-    <form class="mat-elevation-z8" style="width: 100%;">
-      <table>
-        <tr>
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Email" name="email" [(ngModel)] = "clickedRow.email" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" name="phone" [(ngModel)] = "clickedRow.phone" [ngModelOptions]="{standalone: true}">
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Skillsets</mat-label>
-            <textarea matInput placeholder="Skillsets" name="skillsets" [(ngModel)] = "clickedRow.skillsets" [ngModelOptions]="{standalone: true}"></textarea>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Hobby</mat-label>
-            <textarea matInput placeholder="Hobby" name="hobby" [(ngModel)] = "clickedRow.hobby" [ngModelOptions]="{standalone: true}"></textarea>
-          </mat-form-field>
-        </tr>
-      </table>
-    </form>
-    <button mat-raised-button *ngIf="clickedRow._id" (click)="update(clickedRow)" color="primary">Update</button>
-  </div>
-</div>
-
-<div *ngIf="user">
-  <h2>User Information</h2>
-  <div>User ID: {{user._id}}</div>
-  <div>Username: {{user.username}}</div>
-  <div>
-    <form #f ="ngForm" class="mat-elevation-z8" style="width: 100%;">
-      <table>
-        <tr>
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Email" name="email" [(ngModel)] = "user.email">
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" name="phone" [(ngModel)] = "user.phone">
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Skillsets</mat-label>
-            <textarea matInput placeholder="Skillsets" name="skillsets" [(ngModel)] = "user.skillsets"></textarea>
-          </mat-form-field>
-        </tr>
-        <tr>
-          <mat-form-field appearance="fill">
-            <mat-label>Hobby</mat-label>
-            <textarea matInput placeholder="Hobby" name="hobby" [(ngModel)] = "user.hobby"></textarea>
-          </mat-form-field>
-        </tr>
-      </table>
-    </form>
-  </div>
-  <button  mat-raised-button *ngIf="user._id" (click)="update(user)" color="primary">Update</button>
-</div>

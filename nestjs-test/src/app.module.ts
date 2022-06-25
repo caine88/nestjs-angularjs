@@ -7,7 +7,7 @@ import { UserService } from './user/user.service';
 import { User, UserSchema } from './user/user.schema';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://username:password@cluster0.rfho1.mongodb.net/User?retryWrites=true&w=majority'),
+  imports: [MongooseModule.forRoot('mongodb+srv://johndoe:Ts!uj1ng@cluster0.rfho1.mongodb.net/User?retryWrites=true&w=majority'),
             MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [AppController, UserController],
   providers: [AppService, UserService],

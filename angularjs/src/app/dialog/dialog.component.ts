@@ -29,8 +29,6 @@ export class DialogComponent implements OnInit {
   }
 
   addUser(){
-    console.log(this.addForm.value);
-
     if (this.addForm.valid) {
       this.api.register(this.addForm.value).subscribe({
         next:() => {
