@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Register</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="addForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input formControlName="username" matInput placeholder="Username" name="username">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Email" name="email">
+            <mat-icon>email</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input formControlName="phone" matInput placeholder="Phone" name="phone">
+            <mat-icon>phone</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Skillsets</mat-label>
+            <textarea formControlName="skillsets" matInput placeholder="Skillsets" name="skillsets"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Hobby</mat-label>
+            <textarea formControlName="hobby" matInput placeholder="Hobby" name="hobby"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-action [align]="'end'">
+    <button  mat-raised-button (click)="addUser()" color="primary">Save</button>
+</div>

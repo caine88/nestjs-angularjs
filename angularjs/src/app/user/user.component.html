@@ -1,0 +1,170 @@
+<div mat-dialog-action [align]="'end'">
+  <button mat-button (click)="openDialog()" mat-flat-button color="primary">Add User</button>
+</div>
+
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" style="width: 100%;" matSort>
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+    <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+  </ng-container>
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="!element.isEdit">
+        {{element.username}}
+      </ng-container>
+      <div *ngIf="element.isEdit">
+        <input matInput placeholder="Username" name="username" [value] = "element.username" [(ngModel)] = "element.username">
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+    <td mat-cell *matCellDef="let element">
+    <!-- <td mat-cell *matCellDef="let element"> {{element.email}} </td> -->
+      <ng-container *ngIf="!element.isEdit">
+        {{element.email}}
+      </ng-container>
+      <div *ngIf="element.isEdit">
+        <input matInput placeholder="Email" name="email" [value] = "element.email" [(ngModel)] = "element.email">
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+    <!-- <td mat-cell *matCellDef="let element"> {{element.phone}} </td> -->
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="!element.isEdit">
+        {{element.phone}}
+      </ng-container>
+      <div *ngIf="element.isEdit">
+        <input matInput placeholder="Phone" name="phone" [value] = "element.phone" [(ngModel)] = "element.phone">
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="skillsets">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Skillsets </th>
+    <!-- <td mat-cell *matCellDef="let element"> {{element.skillsets}} </td> -->
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="!element.isEdit">
+        {{element.skillsets}}
+      </ng-container>
+      <div *ngIf="element.isEdit">
+        <input matInput placeholder="Skillsets" name="skillsets" [value] = "element.skillsets" [(ngModel)] = "element.skillsets">
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="hobby">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Hobby </th>
+    <!-- <td mat-cell *matCellDef="let element"> {{element.hobby}} </td> -->
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="!element.isEdit">
+        {{element.hobby}}
+      </ng-container>
+      <div *ngIf="element.isEdit">
+        <input matInput placeholder="Hobby" name="hobby" [value] = "element.hobby" [(ngModel)] = "element.hobby">
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <div *ngIf="!element.isEdit">
+        <button mat-mini-fab (click)="select(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab (click)="delete(element._id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="element.isEdit">
+        <button mat-mini-fab (click)="update(element)">
+          <mat-icon>update</mat-icon>
+        </button>
+        <button mat-mini-fab (click)="cancel()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <!-- <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" (click)="onRowClicked(row)"></tr> -->
+  <tr mat-row (click)="clickedRows.add(row)" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>
+
+<div *ngIf="clickedRows.size">
+  <div *ngFor="let clickedRow of clickedRows">
+    <h2>{{clickedRow.username | uppercase}}</h2>
+    <form class="mat-elevation-z8" style="width: 100%;">
+      <table>
+        <tr>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" name="email" [(ngModel)] = "clickedRow.email" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" name="phone" [(ngModel)] = "clickedRow.phone" [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Skillsets</mat-label>
+            <textarea matInput placeholder="Skillsets" name="skillsets" [(ngModel)] = "clickedRow.skillsets" [ngModelOptions]="{standalone: true}"></textarea>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Hobby</mat-label>
+            <textarea matInput placeholder="Hobby" name="hobby" [(ngModel)] = "clickedRow.hobby" [ngModelOptions]="{standalone: true}"></textarea>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+    <button mat-raised-button *ngIf="clickedRow._id" (click)="update(clickedRow)" color="primary">Update</button>
+  </div>
+</div>
+
+<div *ngIf="user">
+  <h2>User Information</h2>
+  <div>User ID: {{user._id}}</div>
+  <div>Username: {{user.username}}</div>
+  <div>
+    <form #f ="ngForm" class="mat-elevation-z8" style="width: 100%;">
+      <table>
+        <tr>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" name="email" [(ngModel)] = "user.email">
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" name="phone" [(ngModel)] = "user.phone">
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Skillsets</mat-label>
+            <textarea matInput placeholder="Skillsets" name="skillsets" [(ngModel)] = "user.skillsets"></textarea>
+          </mat-form-field>
+        </tr>
+        <tr>
+          <mat-form-field appearance="fill">
+            <mat-label>Hobby</mat-label>
+            <textarea matInput placeholder="Hobby" name="hobby" [(ngModel)] = "user.hobby"></textarea>
+          </mat-form-field>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <button  mat-raised-button *ngIf="user._id" (click)="update(user)" color="primary">Update</button>
+</div>
