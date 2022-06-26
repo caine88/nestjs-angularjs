@@ -43,4 +43,8 @@ export class DialogComponent implements OnInit {
       })
     }
   }
+
+  cancel() {
+    this.dialogRef.close();
+  }
 }
