@@ -43,15 +43,15 @@ export class UserComponent implements OnInit {
 
   getUsers () {
     this.api.getUsers().subscribe({
-      next:(result) => {
+      next:(result: any) => {
         this.dataSource = new MatTableDataSource(result);
 
         // Add property to enable editable field when required
-        this.dataSource.data.forEach(element => {
+        this.dataSource.data.forEach((element: User) => {
             element['isEdit'] = false;
         });
       },
-      error:(error) => {
+      error:(error: any) => {
         console.log(error);
         alert("Failed to retrieve user list!");
       }
@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
           return user._id !== id ? user : false;
         })
       },
-      error:(error) => {
+      error:(error: any) => {
         console.log(error);
         alert("Failed to delete user!");
       }
@@ -81,7 +81,7 @@ export class UserComponent implements OnInit {
     this.api.updateUser(user).subscribe({
       next:() => {
       },
-      error:(error) => {
+      error:(error: any) => {
         console.log(error);
         alert("Failed to update user!");
       }

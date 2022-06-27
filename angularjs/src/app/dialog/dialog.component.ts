@@ -36,8 +36,8 @@ export class DialogComponent implements OnInit {
           this.addForm.reset();
           this.dialogRef.close();
         },
-        error:(error) => {
-          console.log("Error = ", error);
+        error:(error: any) => {
+          console.log(error);
           alert("Failed to create user");
         }
       })
